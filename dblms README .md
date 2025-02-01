@@ -1,10 +1,10 @@
-# Library Management System: SQL Database Report
+# Library Management System: SQL Database Summary 
 
 ## 1. Schema Design and Explanation
 
 ### 1.1 Schema Overview
 The schema consists of four tables: **Author**, **Books**, **Customer**, and **Transactions**, with the following relationships:
-- **Author**: Stores information about book authors, including their `Name` and their `Genre_Exp` expertise.
+- **Author**: Stores information about book authors, including their `Name` and their `Genre` expertise.
 - **Books**: Contains details of the books, including `Title`, `Genre`, `Publication_Date`, and a foreign key `AUTHORID` referencing the `Author` table.
 - **Customer**: Stores customer information such as `Name`, `Contact_No`, and `Email`.
 - **Transactions**: Tracks borrowing transactions, with references to `BOOKID` and `CUSTOMERID`, as well as `IssueDate` and optional `ReturnDate`.
