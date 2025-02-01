@@ -26,7 +26,7 @@ try:
 
     
     print("Inserting data into 'authors' table...")
-    for _ in range(100):
+    for _ in range(10):
         name = fake.name()
         birth_year = random.randint(1900, 2000)
         cursor.execute(
@@ -48,7 +48,7 @@ try:
 
     
     print("Inserting data into 'customers' table...")
-    for _ in range(10):
+    for _ in range(20):
         name = fake.name()[:10]  # Truncate to 15 characters
         email = fake.email()
         phone = fake.msisdn()[:10]  # Ensure phone numbers fit
@@ -60,7 +60,7 @@ try:
 
     
     print("Inserting data into 'transactions' table...")
-    for _ in range(50):
+    for _ in range(15):
         book_id = random.randint(1, 50)  # Assuming 50 books exist
         customer_id = random.randint(1, 15)  # Assuming 15 customers exist
         issue_date = fake.date_between(start_date='-1y', end_date='today')
