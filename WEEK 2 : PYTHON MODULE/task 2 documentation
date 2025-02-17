@@ -1,0 +1,124 @@
+Apache Webserver Log Parser
+Overview
+This project provides a Python-based solution for parsing Apache webserver logs, extracting key metrics, and storing them in a PostgreSQL database for further analysis. The logs are parsed using regular expressions to extract fields such as the client’s IP address, HTTP method, requested URL, status code, timestamp, and user agent details (browser, operating system, etc.). The extracted data is then inserted into a PostgreSQL database.
+
+Project Features
+Parse Apache webserver logs in Combined Log Format.
+Extract and store key log information:
+IP address
+Timestamp
+HTTP method
+URL path
+Status code
+Referrer URL
+User agent (browser and operating system)
+Store extracted data in a PostgreSQL database.
+Provide SQL queries for generating reports from the stored log data, including:
+Total number of requests.
+Number of unique IP addresses.
+Top 10 most frequent IP addresses.
+Technologies Used
+Python: The log parser is implemented using Python, leveraging the re (regular expression) module for parsing.
+PostgreSQL: A PostgreSQL database is used to store the parsed log data for querying.
+psycopg2: A Python library used to interact with PostgreSQL.
+Regular Expressions: Used to parse and extract data from Apache webserver log entries.
+Installation
+Prerequisites
+Python 3.x: Ensure Python is installed on your machine.
+PostgreSQL: Make sure PostgreSQL is installed and running on your machine.
+psycopg2: Install the psycopg2 library to connect to PostgreSQL from Python.
+Steps to Install
+Clone the Repository Clone this repository to your local machine:
+
+bash
+Copy
+git clone https://github.com/your-username/apache-log-parser.git
+cd apache-log-parser
+Install Python Dependencies Install the required Python libraries by running:
+
+bash
+Copy
+pip install -r requirements.txt
+Set Up PostgreSQL Database
+
+Create a PostgreSQL database and a table to store the parsed logs. You can use the following SQL schema:
+sql
+Copy
+CREATE TABLE webserver_logs (
+    id SERIAL PRIMARY KEY,
+    ip VARCHAR(45),
+    timestamp TIMESTAMP,
+    method VARCHAR(10),
+    url TEXT,
+    status_code INT,
+    user_agent TEXT,
+    referrer TEXT
+);
+Update Database Credentials In the Python script (log_parser.py), update the following database credentials:
+
+python
+Copy
+conn = psycopg2.connect(
+    dbname="your_database",
+    user="your_username",
+    password="your_password",
+    host="localhost"
+)
+Run the Log Parser Script Run the script to parse the log file and insert data into the PostgreSQL database:
+
+bash
+Copy
+python log_parser.py apache_logs_sample.txt
+Project Structure
+The project contains the following files:
+
+perl
+Copy
+apache-log-parser/
+├── log_parser.py            # Python script to parse Apache logs and load data into PostgreSQL
+├── requirements.txt         # List of Python dependencies (e.g., psycopg2)
+├── apache_logs_sample.txt   # Sample Apache webserver log file (for testing purposes)
+└── README.md                # Project documentation
+log_parser.py: Contains the main Python logic for parsing the logs and inserting data into the PostgreSQL database.
+requirements.txt: Specifies Python package dependencies such as psycopg2 and others.
+apache_logs_sample.txt: A sample Apache log file in Combined Log Format to test the parser.
+README.md: Documentation file (this file) explaining the usage and functionality of the project.
+Usage
+Parsing Apache Logs
+To parse Apache logs and insert them into the PostgreSQL database, you can use the following command:
+
+bash
+Copy
+python log_parser.py <path_to_apache_log_file>
+For example, using the sample log file provided in the repository:
+
+bash
+Copy
+python log_parser.py apache_logs_sample.txt
+This will read the log file, extract relevant information, and insert it into the PostgreSQL database.
+
+Querying the Data in PostgreSQL
+Once the data is loaded into the PostgreSQL database, you can run the following SQL queries to generate reports:
+
+1. Total Number of Requests
+To get the total number of requests in the logs:
+
+sql
+Copy
+SELECT COUNT(*) FROM webserver_logs;
+2. Number of Unique IP Addresses
+To get the count of unique IP addresses that made requests:
+
+sql
+Copy
+SELECT COUNT(DISTINCT ip) FROM webserver_logs;
+3. Top 10 Most Frequent IP Addresses
+To get the top 10 most frequent IP addresses that made requests:
+
+sql
+Copy
+SELECT ip, COUNT(*) AS request_count
+FROM webserver_logs
+GROUP BY ip
+ORDER BY request_count DESC
+LIMIT 10;
